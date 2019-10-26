@@ -1,11 +1,39 @@
 {% extends 'administrator/base.html' %}
 {% block body %}
 
-        <div class="container">
+        <div class="container" style="margin-top: 20px;">
           <div class="row">
-            <div class="col-md-12">
-              tets
-            </div>
+
+           <div class="col-md-3">         
+			<div class="alert alert-success">
+			<strong>First Stage Earning:</strong><br> ${{qs.level1}}
+			</div>
+           </div>
+
+           <div class="col-md-3">         
+			<div class="alert alert-info">
+			<strong>Second Stage Earning</strong> <br> ${{qs.level2}}
+			</div>
+           </div>
+
+           <div class="col-md-3">         
+			<div class="alert alert-warning">
+			<strong>Third Stage Earning</strong> <br> ${{qs.level3}}
+			</div>
+           </div>
+
+           <div class="col-md-3">         
+			<div class="alert alert-danger">
+			<strong>Fouth Stage Earning</strong> <br> ${{qs.level4}}
+			</div>
+           </div>
+
+           <div class="col-md-3">         
+			<div class="alert alert-success">
+			<strong>Fifth Stage Earning</strong> <br> ${{qs.level5}}
+			</div>
+           </div>
+
           </div>
 
          </div> 

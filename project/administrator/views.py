@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from users.models import Profile
 
-# Create your views here.
+@login_required(login_url='/users/login/')
 def administrator(request):
-	return render(request, 'administrator/index.html')
+	qs = Profile.objects.get(user=request.user)
+	return render(request, 'administrator/index.html', {'qs':qs})

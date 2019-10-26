@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm 
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from .models import Profile
+from .forms import LoginForm
+from django.contrib.auth import authenticate, login, get_user_model, logout
 
 def register(request):
 	if request.method == 'POST':
@@ -68,7 +70,7 @@ def register(request):
 			else:
 				Profile.objects.create(user=user)
 
-			return HttpResponse('done')
+			return redirect('users:login_page')
 			
 	else:
 		form = UserRegistrationForm()
@@ -76,5 +78,30 @@ def register(request):
 	return render(request, 'administrator/register.html', context)
 
 
-def login(request):
-	return render(request, 'administrator/login.html')
+
+
+def logout_page(request):
+	logout(request)
+	return render(request, "administrator/logout.html", {})
+
+
+
+def login_page(request):
+	if request.method == 'POST':
+		form = LoginForm(request.POST or None)
+		if form.is_valid():
+			username  = form.cleaned_data.get("username")
+			password  = form.cleaned_data.get("password")
+			user = authenticate(username=username, password=password)
+			if user is not None:
+			 	if user.is_active:
+			 		login(request, user)
+			 		return redirect('/')
+			 	else:
+			 		return HttpResponse('Disabled account')
+			else:
+				return HttpResponse('Invalid login')
+	else:
+		form = LoginForm()
+	context = {"form": form}
+	return render(request, "administrator/login.html", context)
